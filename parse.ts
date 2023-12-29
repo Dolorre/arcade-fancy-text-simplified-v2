@@ -18,9 +18,8 @@ namespace fancyText {
         Font5 = 1 << 15,
         Font8 = 1 << 16,
         Font12 = 1 << 17,
-        Shaky = 1 << 18,
-        Fast = 1 << 19,
-        VeryFast = 1 << 20
+        Fast = 1 << 18,
+        VeryFast = 1 << 19
     }
 
     export class Span {
@@ -231,9 +230,6 @@ namespace fancyText {
             case "big":
             case "font12":
                 return Tag.Font12;
-            case "shake":
-            case "shaky":
-                return Tag.Shaky;
             case "fast":
                 return Tag.Fast;
             case "veryfast":
