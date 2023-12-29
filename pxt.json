@@ -1,6 +1,9 @@
 {
-    "name": "arcade-fancy-text",
+    "name": "arcade-fancy-text-simplified-v2",
     "version": "0.0.14",
+    "dependencies": {
+        "device": "*"
+    },
     "files": [
         "docs/animate-at-speed.md",
         "docs/animate-for-time.md",
@@ -11,10 +14,8 @@
         "docs/get-color.md",
         "docs/get-text.md",
         "docs/remaining-animation-time.md",
-        "docs/set-animation-sound.md",
         "docs/set-color.md",
         "docs/set-font.md",
-        "docs/set-frame.md",
         "docs/set-max-width.md",
         "docs/set-text-flag.md",
         "docs/set-text.md",
@@ -24,17 +25,18 @@
         "draw.ts",
         "sprite.ts",
         "api.ts",
-        "built-fonts.ts",
         "main.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
+    "testDependencies": {},
+    "targetVersions": {
+        "target": "1.12.46",
+        "targetId": "arcade"
+    },
     "supportedTargets": [
         "arcade"
     ],
-    "dependencies": {
-        "device": "*"
-    },
-    "testDependencies": {}
+    "preferredEditor": "tsprj"
 }

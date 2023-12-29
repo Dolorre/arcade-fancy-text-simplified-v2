@@ -1,5 +1,4 @@
 namespace fancyText {
-    const rainbow = img`245768ca`
 
     export function drawFontText(left: number, top: number, text: string, lines: Line[], defaultColor: number, defaultFont: fancyText.BaseFont, length: number) {
         let currentLeft = left;
@@ -80,12 +79,7 @@ namespace fancyText {
     }
 
     function drawFontSpan(left: number, top: number, text: string, font: fancyText.BaseFont, color: number, flags: number, absoluteLeft: number, length: number) {
-        if (flags & Tag.Blinking) {
-            if (Math.idiv(game.runtime(), 250) % 2 === 0) {
-                return;
-            }
-        }
-        if (flags & (Tag.Wavy | Tag.Shaky | Tag.Rainbow)) {
+        if (flags & (Tag.Shaky)) {
             const width = getTextWidth(font, text) / text.length;
 
             const tick = Math.idiv(game.runtime(), 100);
@@ -98,12 +92,6 @@ namespace fancyText {
                 if (flags & Tag.Shaky) {
                     x += randint(-1, 1);
                     y += randint(-1, 1);
-                }
-                if (flags & Tag.Wavy) {
-                    y += Math.sin(((x - absoluteLeft) / 10) + tick) * 2;
-                }
-                if (flags & Tag.Rainbow) {
-                    color = rainbow.getPixel((Math.idiv(x - absoluteLeft, width) + tick) % rainbow.width, 0);
                 }
                 const char = text.charAt(i);
                 const code = text.charCodeAt(i);
@@ -400,12 +388,7 @@ namespace fancyText {
     }
 
     function drawFontSpanInBox(left: number, top: number, boxLeft: number, boxTop: number, boxRight: number, boxBottom: number, text: string, font: fancyText.BaseFont, color: number, flags: number, absoluteLeft: number, length: number) {
-        if (flags & Tag.Blinking) {
-            if (Math.idiv(game.runtime(), 250) % 2 === 0) {
-                return;
-            }
-        }
-        if (flags & (Tag.Wavy | Tag.Shaky | Tag.Rainbow)) {
+        if (flags & (Tag.Shaky)) {
             const width = getTextWidth(font, text) / text.length;
 
             const tick = Math.idiv(game.runtime(), 100);
@@ -418,12 +401,6 @@ namespace fancyText {
                 if (flags & Tag.Shaky) {
                     x += randint(-1, 1);
                     y += randint(-1, 1);
-                }
-                if (flags & Tag.Wavy) {
-                    y += Math.sin(((x - absoluteLeft) / 10) + tick) * 2;
-                }
-                if (flags & Tag.Rainbow) {
-                    color = rainbow.getPixel((Math.idiv(x - absoluteLeft, width) + tick) % rainbow.width, 0);
                 }
                 const char = text.charAt(i);
                 const code = text.charCodeAt(i);

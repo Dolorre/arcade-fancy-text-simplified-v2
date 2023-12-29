@@ -19,13 +19,8 @@ namespace fancyText {
         Font8 = 1 << 16,
         Font12 = 1 << 17,
         Shaky = 1 << 18,
-        Wavy = 1 << 19,
-        Blinking = 1 << 20,
-        Rainbow = 1 << 21,
-        VerySlow = 1 << 22,
-        Slow = 1 << 23,
-        Fast = 1 << 24,
-        VeryFast = 1 << 25
+        Fast = 1 << 19,
+        VeryFast = 1 << 20
     }
 
     export class Span {
@@ -239,18 +234,6 @@ namespace fancyText {
             case "shake":
             case "shaky":
                 return Tag.Shaky;
-            case "wave":
-            case "wavy":
-                return Tag.Wavy;
-            case "blink":
-            case "blinking":
-                return Tag.Blinking;
-            case "rainbow":
-                return Tag.Rainbow;
-            case "veryslow":
-                return Tag.VerySlow;
-            case "slow":
-                return Tag.Slow;
             case "fast":
                 return Tag.Fast;
             case "veryfast":

@@ -424,13 +424,7 @@ namespace fancyText {
 
             if (!span) return timer;
 
-            if (span.flags & Tag.VerySlow) {
-                timer *= 12;
-            }
-            else if (span.flags & Tag.Slow) {
-                timer *= 4;
-            }
-            else if (span.flags & Tag.Fast) {
+            if (span.flags & Tag.Fast) {
                 timer /= 2;
             }
             else if (span.flags & Tag.VeryFast) {
@@ -470,13 +464,7 @@ namespace fancyText {
         let length = 0;
         for (const line of lines.slice(startLine, endLine)) {
             for (const span of line.spans) {
-                if (span.flags & Tag.VerySlow) {
-                    length += 12 * span.length;
-                }
-                else if (span.flags & Tag.Slow) {
-                    length += 4 * span.length;
-                }
-                else if (span.flags & Tag.Fast) {
+                if (span.flags & Tag.Fast) {
                     length += 0.5 * span.length;
                 }
                 else if (span.flags & Tag.VeryFast) {

@@ -4,18 +4,6 @@
 namespace fancyText {
     //% blockIdentity="fancyText.__speedPicker"
     export enum TextSpeed {
-        //% block="very slow"
-        //% blockIdentity="fancyText.__speedPicker"
-        VerySlow = 4,
-
-        //% block="slow"
-        //% blockIdentity="fancyText.__speedPicker"
-        Slow = 8,
-
-        //% block="normal"
-        //% blockIdentity="fancyText.__speedPicker"
-        Normal = 12,
-
         //% block="fast"
         //% blockIdentity="fancyText.__speedPicker"
         Fast = 16,
@@ -161,24 +149,6 @@ namespace fancyText {
     }
 
     /**
-     * Gets the color of this TextSprite.
-     *
-     * @param sprite The TextSprite to get the color of
-     * @returns The color of this TextSprite
-     */
-    //% blockId=fancy_text_get_color
-    //% block="$sprite color"
-    //% sprite.shadow=variables_get
-    //% sprite.defl=myTextSprite
-    //% group=Create
-    //% weight=65
-    //% help=github:arcade-fancy-text/docs/get-color
-    export function getColor(sprite: Sprite) {
-        assertTextSprite(sprite);
-        return (sprite as TextSprite).getColor();
-    }
-
-    /**
      * Sets the font used when drawing this TextSprite. Not all fonts
      * can be used with all characters, so try using the "arcade default"
      * or "arcade unicode" font if your text is displaying incorrectly
@@ -198,27 +168,6 @@ namespace fancyText {
     export function setFont(sprite: Sprite, font: BaseFont) {
         assertTextSprite(sprite);
         (sprite as TextSprite).setFont(font);
-    }
-
-
-    /**
-     * Sets a frame to be drawn around this TextSprite
-     *
-     * @param sprite The TextSprite to set the frame on
-     * @param frame The frame to set on the TextSprite
-     */
-    //% blockId=fancy_text_set_frame
-    //% block="$sprite set frame $frame"
-    //% sprite.shadow=variables_get
-    //% sprite.defl=myTextSprite
-    //% frame.shadow=dialog_image_picker
-    //% group=Create
-    //% weight=50
-    //% blockGap=8
-    //% help=github:arcade-fancy-text/docs/set-frame
-    export function setFrame(sprite: Sprite, frame: Image) {
-        assertTextSprite(sprite);
-        (sprite as TextSprite).setFrame(frame);
     }
 
     /**
@@ -327,27 +276,6 @@ namespace fancyText {
     export function remainingAnimationTime(sprite: Sprite) {
         assertTextSprite(sprite);
         return (sprite as TextSprite).remainingAnimationTime();
-    }
-
-    /**
-     * Sets a sound to be played every time a character is printed while
-     * a TextSprite is animating.
-     *
-     * @param sprite The TextSprite to set the sound on
-     * @param sound The sound to play when a character is printed
-     * @returns The remaining time in the animation or 0 if the TextSprite is not animating
-     */
-    //% blockId=fancy_text_set_animation_sound
-    //% block="$sprite set animation sound $sound"
-    //% sprite.shadow=variables_get
-    //% sprite.defl=myTextSprite
-    //% sound.shadow=soundExpression_createSoundEffect
-    //% group=Animate
-    //% weight=40
-    //% help=github:arcade-fancy-text/docs/set-animation-sound
-    export function setAnimationSound(sprite: Sprite, sound: music.Playable) {
-        assertTextSprite(sprite);
-        (sprite as TextSprite).setAnimationSound(sound);
     }
 
     /**
