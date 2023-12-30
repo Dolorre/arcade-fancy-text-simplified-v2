@@ -48,7 +48,6 @@ namespace fancyText {
         protected nextId: number;
         protected startLine: number;
         protected drawnLines: number;
-        protected animation: AnimationState;
 
         constructor(public text: string, kind: number) {
             super(img`1`, kind);
@@ -71,16 +70,8 @@ namespace fancyText {
                     this.visibleLines(),
                     this.color,
                     font,
-                    this.animation ? this.animation.getOffset() : this.text.length
+                    this.text.length
                 );
-        }
-
-        preUpdate(deltaTimeMillis: number) {
-            if (this.animation) {
-                if (this.animation.isFinished()) {
-                    this.animation = undefined;
-                }
-            }
         }
 
         length(): number {
@@ -133,46 +124,6 @@ namespace fancyText {
             return this.startLine + this.drawnLines < this.lines.length
         }
 
-        animateAtSpeed(charactersPerSecond: number) {
-            this.animation = new AnimationState(
-                this.nextId++,
-                this.visibleLines(),
-                Math.max(charactersPerSecond, 0.001),
-                this.getAnimationStartOffset()
-            )
-            this.recalculateDimensions();
-        }
-
-        animateForTime(timeMillis: number) {
-            let length: number;
-
-            if (this.startLine > 0) {
-                length = calculateAnimationLength(this.lines, this.startLine, this.startLine + this.drawnLines);
-            }
-            else {
-                length = calculateAnimationLength(this.lines, 0, this.lines.length);
-            }
-            this.animateAtSpeed(length * 1000 / timeMillis)
-        }
-
-        remainingAnimationTime(): number {
-            if (!this.animation) return 0;
-            return this.animation.remainingAnimationTime();
-        }
-
-        pauseUntilAnimationIsComplete() {
-            if (!this.animation) return;
-
-            // If animate is called a second time, animationId will change and
-            // the pause will end
-            const id = this.animation.id;
-            pauseUntil(() => !this.animation || id !== this.animation.id);
-        }
-
-        cancelAnimation() {
-            this.animation = undefined;
-        }
-
         protected recalculateLines() {
             if (this.maxWidth) {
                 this.lines = getLines(this.text, this.spans, this.maxWidth, this.defaultFont || getDefaultFont(this.text));
@@ -182,17 +133,6 @@ namespace fancyText {
             }
 
             this.recalculateDimensions();
-
-            if (this.animation) {
-                const old = this.animation;
-                this.animation = new AnimationState(
-                    old.id,
-                    this.visibleLines(),
-                    old.speed,
-                    this.getAnimationStartOffset()
-                );
-                this.animation.setOffset(old.getOffset());
-            }
         }
 
         protected recalculateDimensions() {
@@ -207,98 +147,11 @@ namespace fancyText {
             this.setDimensions(width, height)
         }
 
-        protected getAnimationStartOffset() {
-            return calculateTextLength(this.lines, 0, this.startLine);
-        }
-
         protected visibleLines() {
             if (this.drawnLines > 0) {
                 return this.lines.slice(this.startLine, this.startLine + this.drawnLines);
             }
             return this.lines;
-        }
-    }
-
-    class AnimationState {
-        protected timer: number;
-        protected offset: number;
-        protected endOffset: number;
-
-        constructor(
-            public id: number,
-            public lines: Line[],
-            public speed: number,
-            public startOffset: number
-        ) {
-            this.setOffset(0);
-            this.endOffset = startOffset + calculateTextLength(lines, 0, lines.length);
-        }
-
-        setOffset(offset: number) {
-            this.offset = offset;
-            this.timer = this.getTimerAtOffset(offset);
-        }
-
-        getOffset() {
-            return this.offset;
-        }
-
-        update(deltaTimeMillis: number) {
-            if (this.isFinished()) return false;
-
-            this.timer -= deltaTimeMillis;
-
-            let didPrintCharacter = false;
-            while (this.timer < 0) {
-                this.offset++;
-                this.timer += this.getTimerAtOffset(this.offset);
-                didPrintCharacter = true;
-            }
-
-            if (this.startOffset + this.offset >= this.endOffset) return true;
-
-            return didPrintCharacter;
-        }
-
-        remainingAnimationTime(): number {
-            if (!this.speed) return 0;
-
-            let time = this.timer;
-            let i = 0;
-            for (const line of this.lines) {
-                for (const span of line.spans) {
-                    if (i > this.offset) {
-                        time += this.getTimerAtOffset(i) * span.length;
-                    }
-                    else if (i + span.length > this.offset) {
-                        time += this.getTimerAtOffset(i) * (span.length - (this.offset - i))
-                    }
-                    i += span.length
-                }
-            }
-
-            return time;
-        }
-
-        isFinished() {
-            return this.startOffset + this.offset >= this.endOffset;
-        }
-
-        protected getTimerAtOffset(offset: number) {
-            const span = getSpanAtOffset(this.lines, offset);
-
-            let timer = 1000 / this.speed;
-
-            if (!span) return timer;
-
-            if (span.flags & Tag.Fast) {
-                timer /= 2;
-            }
-            else if (span.flags & Tag.VeryFast) {
-                timer /= 4;
-            }
-
-            return timer;
         }
     }
 
@@ -321,25 +174,6 @@ namespace fancyText {
         for (const line of lines.slice(startLine, endLine)) {
             for (const span of line.spans) {
                 length += span.length
-            }
-        }
-
-        return length;
-    }
-
-    function calculateAnimationLength(lines: Line[], startLine: number, endLine: number) {
-        let length = 0;
-        for (const line of lines.slice(startLine, endLine)) {
-            for (const span of line.spans) {
-                if (span.flags & Tag.Fast) {
-                    length += 0.5 * span.length;
-                }
-                else if (span.flags & Tag.VeryFast) {
-                    length += 0.25 * span.length;
-                }
-                else {
-                    length += span.length;
-                }
             }
         }
 
