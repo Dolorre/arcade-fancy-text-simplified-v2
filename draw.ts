@@ -6,8 +6,8 @@ namespace fancyText {
         for (const line of lines) {
             currentLeft = left;
             for (const span of line.spans) {
-                const font = getFontForSpan(span.flags) || defaultFont;
-                const color = getColorForSpan(span.flags) || defaultColor;
+                const font = defaultFont;
+                const color = defaultColor;
 
                 if (font.lineHeight === line.height) {
                     drawFontSpan(currentLeft, top, text.substr(span.offset, span.length), font, color, span.flags, left, length);

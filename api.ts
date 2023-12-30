@@ -13,21 +13,6 @@ namespace fancyText {
         VeryFast = 20
     }
 
-    //% blockIdentity="fancyText.__textFlagPicker"
-    export enum Flag {
-        //% block="change height while animating"
-        //% blockIdentity="fancyText.__textFlagPicker"
-        ChangeHeightWhileAnimating = 1 << 0,
-
-        //% block="change width while animating"
-        //% blockIdentity="fancyText.__textFlagPicker"
-        ChangeWidthWhileAnimating = 1 << 1,
-
-        //% block="always occupy max width"
-        //% blockIdentity="fancyText.__textFlagPicker"
-        AlwaysOccupyMaxWidth = 1 << 2
-    }
-
     export enum AnimationPlayMode {
         //% block="until done"
         UntilDone,
@@ -171,29 +156,6 @@ namespace fancyText {
     }
 
     /**
-     * Sets a flag on a TextSprite. Flags are used to customize
-     * various settings for a TextSprite
-     *
-     * @param sprite The TextSprite to set the flag on
-     * @param flag The flag to set the value of
-     * @param on The value to set the flag to
-     */
-    //% blockId=fancy_text_set_text_flag
-    //% block="$sprite set flag $flag to $on"
-    //% sprite.shadow=variables_get
-    //% sprite.defl=myTextSprite
-    //% flag.shadow=fancy_text__textFlagPicker
-    //% on.shadow=toggleOnOff
-    //% group=Create
-    //% weight=10
-    //% blockGap=8
-    //% help=github:arcade-fancy-text/docs/set-text-flag
-    export function setTextFlag(sprite: Sprite, flag: number, on: boolean) {
-        assertTextSprite(sprite);
-        (sprite as TextSprite).setTextFlag(flag, on);
-    }
-
-    /**
      * Animates a TextSprite so that it prints itself character by character
      * at a given speed. The speed is in characters per second.
      *
@@ -303,20 +265,6 @@ namespace fancyText {
     //% help=github:arcade-fancy-text/docs/text-speed
     export function __speedPicker(speed: TextSpeed): number {
         return speed;
-    }
-
-    /**
-     * A Flag that can be set to on or off for a TextSprite. Flags let you customize
-     * the way a TextSprite behaves.
-     */
-    //% shim=TD_ID
-    //% blockId=fancy_text__textFlagPicker
-    //% block="$flag"
-    //% group=Create
-    //% weight=0
-    //% help=github:arcade-fancy-text/docs/flag
-    export function __textFlagPicker(flag: Flag): number {
-        return flag;
     }
 
     //% whenUsed

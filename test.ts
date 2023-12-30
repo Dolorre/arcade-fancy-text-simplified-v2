@@ -7,9 +7,6 @@ const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do e
 
 let myTextSprite: fancyText.TextSprite = null
 myTextSprite = fancyText.create(lorem)
-myTextSprite.setTextFlag(fancyText.Flag.ChangeHeightWhileAnimating, false)
-myTextSprite.setTextFlag(fancyText.Flag.AlwaysOccupyMaxWidth, true)
-myTextSprite.setTextFlag(fancyText.Flag.ChangeWidthWhileAnimating, false)
 
 myTextSprite.setMaxLines(3)
 
